@@ -1,7 +1,10 @@
 //
 //  StandingsCell.swift
-//  Footbalchik
+//  Footbalchik New
 //
+//  Created by Nick on 20.05.2026.
+//
+
 
 import UIKit
 

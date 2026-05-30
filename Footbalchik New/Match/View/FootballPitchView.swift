@@ -29,8 +29,8 @@ final class FootballPitchView: UIView {
 
     // MARK: - Storage
 
-    private var homeAvatars: [String: PlayerAvatarView] = [:]
-    private var awayAvatars: [String: PlayerAvatarView] = [:]
+    private var homeAvatars: [String: JerseyView] = [:]
+    private var awayAvatars: [String: JerseyView] = [:]
 
     // MARK: - Layout constants
 
@@ -108,38 +108,37 @@ final class FootballPitchView: UIView {
     private func updatePlayers() {
 
         for player in homePlayers {
-
             if homeAvatars[player.id] == nil {
-
-                let avatar = PlayerAvatarView(
+                let jersey = JerseyView()
+                jersey.configure(
+                    number: player.shirtNumber,
                     name: player.lastName ?? player.name,
-                    isHome: true,
-                    avatarDiameter: avatarBaseSize,
-                    labelHeight: labelHeight
+                    style: style(for: player, isHome: true)
                 )
-
-                homeLayer.addSubview(avatar)
-                homeAvatars[player.id] = avatar
+                homeLayer.addSubview(jersey)
+                homeAvatars[player.id] = jersey
             }
         }
 
         for player in awayPlayers {
-
             if awayAvatars[player.id] == nil {
-
-                let avatar = PlayerAvatarView(
+                let jersey = JerseyView()
+                jersey.configure(
+                    number: player.shirtNumber,
                     name: player.lastName ?? player.name,
-                    isHome: false,
-                    avatarDiameter: avatarBaseSize,
-                    labelHeight: labelHeight
+                    style: style(for: player, isHome: false)
                 )
-
-                awayLayer.addSubview(avatar)
-                awayAvatars[player.id] = avatar
+                awayLayer.addSubview(jersey)
+                awayAvatars[player.id] = jersey
             }
         }
 
         layoutPlayers(animated: true)
+    }
+
+    private func style(for player: PlayerOnField, isHome: Bool) -> JerseyView.Style {
+        if player.position == .goalkeeper { return .goalkeeper }
+        return isHome ? .home : .away
     }
 
     private func layoutPlayers(animated: Bool) {

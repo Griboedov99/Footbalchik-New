@@ -18,6 +18,8 @@ enum HomeLayoutFactory {
                 return favoritesLayout()
             case .matches:
                 return matchesLayout()
+            case .standings:
+                return standingsLayout()
             }
         }
     }
@@ -48,6 +50,24 @@ enum HomeLayoutFactory {
             trailing: 20
         )
         
+        return section
+    }
+    
+    private static func standingsLayout() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .estimated(400)   // оценка; реальная высота берётся из контента
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .estimated(400)
+        )
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 16, trailing: 16)
         return section
     }
     

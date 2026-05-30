@@ -11,28 +11,32 @@ import Foundation
 final class HomeViewModel {
     private let matchService: MatchService
     private let leagueService: LeagueServicing
+    private let standingsService: StandingsServicing
     private let favoriteStorage: FavoriteTeamStorage
-    
+
     var onDataUpdated: (() -> Void)?
     var onError: ((String) -> Void)?
     var onLoadingChanged: ((Bool) -> Void)?
     var onLeaguesLoaded: (([League]) -> Void)?
-    
+
     private(set) var favoriteMatches: [Match] = []
     private(set) var leagueMatches: [Match] = []
+    private(set) var standings: [TableRow] = []
     private(set) var currentLeague: League?
     private(set) var availableLeagues: [League] = []
     private(set) var favoriteTeamIds: Set<Int> = []
-    
+
     private var isLoading = false
-    
+
     init(
         matchService: MatchService,
         leagueService: LeagueServicing,
+        standingsService: StandingsServicing,
         favoriteStorage: FavoriteTeamStorage
     ) {
         self.matchService = matchService
         self.leagueService = leagueService
+        self.standingsService = standingsService
         self.favoriteStorage = favoriteStorage
         loadInitialData()
     }
@@ -94,23 +98,40 @@ final class HomeViewModel {
         isLoading = true
         onLoadingChanged?(true)
 
-        matchService.fetchMatches(league: league, forceRefresh: forceRefresh) { [weak self] result in
-            DispatchQueue.main.async {
-                self?.isLoading = false
-                self?.onLoadingChanged?(false)
+        let group = DispatchGroup()
+        var loadError: String?
 
-                switch result {
-                case .success(let allMatches):
-                    self?.filterMatches(allMatches)
-                    self?.onDataUpdated?()
-                case .failure(let error):
-                    print("Failed to load matches for \(league.name): \(error)")
-                    self?.favoriteMatches = []
-                    self?.leagueMatches = []
-                    self?.onDataUpdated?()
-                    self?.onError?("Failed to load matches for \(league.name)")
-                }
+        // Матчи
+        group.enter()
+        matchService.fetchMatches(league: league, forceRefresh: forceRefresh) { [weak self] result in
+            switch result {
+            case .success(let allMatches):
+                self?.filterMatches(allMatches)
+            case .failure:
+                self?.favoriteMatches = []
+                self?.leagueMatches = []
+                loadError = "Failed to load matches for \(league.name)"
             }
+            group.leave()
+        }
+
+        // Таблица
+        group.enter()
+        standingsService.fetchStandings(league: league, forceRefresh: forceRefresh) { [weak self] result in
+            switch result {
+            case .success(let rows):
+                self?.standings = rows
+            case .failure:
+                self?.standings = []   // таблицы может не быть (например, кубок) — просто скрываем секцию
+            }
+            group.leave()
+        }
+
+        group.notify(queue: .main) { [weak self] in
+            self?.isLoading = false
+            self?.onLoadingChanged?(false)
+            self?.onDataUpdated?()
+            if let loadError { self?.onError?(loadError) }
         }
     }
 

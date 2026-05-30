@@ -1,12 +1,11 @@
 //
-//  StandingsServicing.swift
+//  StandingsService.swift
 //  Footbalchik New
 //
-//  Created by Nick on 30.05.2026.
+//  Created by Nick on 20.05.2026.
 //
 
 
-//  StandingsService.swift
 import Foundation
 
 protocol StandingsServicing {

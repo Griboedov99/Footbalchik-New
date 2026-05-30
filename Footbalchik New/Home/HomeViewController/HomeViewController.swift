@@ -83,6 +83,11 @@ final class HomeViewController: BaseViewController {
         )
         
         collectionView.register(
+            StandingsCell.self,
+            forCellWithReuseIdentifier: StandingsCell.reuseId
+        )
+        
+        collectionView.register(
             SectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: SectionHeaderView.reuseId

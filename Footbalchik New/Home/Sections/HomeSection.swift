@@ -8,5 +8,6 @@
 
 enum HomeSection: Int, CaseIterable {
     case favorites
+    case standings
     case matches
 }

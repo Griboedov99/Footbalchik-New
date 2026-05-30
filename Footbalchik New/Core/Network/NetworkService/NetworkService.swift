@@ -21,8 +21,14 @@ final class NetworkService: NetworkServicing {
         _ endpoint: APIRouter,
         completion: @escaping (Result<T, Error>) -> Void
     ) {
-        // Создаем request - здесь НЕ используем if let, потому что url всегда существует
-        var request = URLRequest(url: endpoint.url)
+        guard let url = endpoint.url else {
+            DispatchQueue.main.async {
+                completion(.failure(NetworkError.invalidURL))
+            }
+            return
+        }
+
+        var request = URLRequest(url: url)
         request.httpMethod = endpoint.method
         request.allHTTPHeaderFields = endpoint.headers
         

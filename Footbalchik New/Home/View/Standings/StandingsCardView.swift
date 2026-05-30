@@ -21,6 +21,7 @@ final class StandingsCardView: GlassCardView {
     private let mainStack = UIStackView()
     private let rowsStack = UIStackView()
     private let showAllButton = UIButton(type: .system)
+    private var hasForm = false
 
     private var rows: [TableRow] = []
     private var isExpanded = false
@@ -37,6 +38,7 @@ final class StandingsCardView: GlassCardView {
 
     func configure(rows: [TableRow]) {
         self.rows = rows
+        hasForm = rows.contains { !$0.recentForm.isEmpty }   // есть ли форма хоть у одной команды
         rebuild()
     }
 
@@ -97,11 +99,17 @@ final class StandingsCardView: GlassCardView {
                   color: .white.withAlphaComponent(0.6), align: .center, width: statColWidth)
         }
 
-        let last = label("Последние 5", font: .systemFont(ofSize: 13),
-                         color: .white.withAlphaComponent(0.6), align: .right)
-        last.setWidth(mode: .equal, formBlockWidth)
+        let right: UIView
+        if hasForm {
+            let last = label("Последние 5", font: .systemFont(ofSize: 13),
+                             color: .white.withAlphaComponent(0.6), align: .right)
+            last.setWidth(mode: .equal, formBlockWidth)
+            right = last
+        } else {
+            right = makeEmptyRightSpacer()
+        }
 
-        return assembleRow(left: club, stats: stats, right: last, height: 28)
+        return assembleRow(left: club, stats: stats, right: right, height: 28)
     }
 
     private func makeDataRow(_ row: TableRow) -> UIView {
@@ -148,8 +156,33 @@ final class StandingsCardView: GlassCardView {
         formContainer.addSubview(formStack)
         formStack.pinRight(to: formContainer)
         formStack.pinCenterY(to: formContainer)
+        
+        let right: UIView
+        if hasForm {
+            let formStack = UIStackView(
+                arrangedSubviews: row.recentForm.map { FormDotView(result: $0, size: formDotSize) }
+            )
+            formStack.axis = .horizontal
+            formStack.spacing = CGFloat(formSpacing)
+            formStack.alignment = .center
+            
+            let formContainer = UIView()
+            formContainer.setWidth(mode: .equal, formBlockWidth)
+            formContainer.addSubview(formStack)
+            formStack.pinRight(to: formContainer)
+            formStack.pinCenterY(to: formContainer)
+            right = formContainer
+        } else {
+            right = makeEmptyRightSpacer()
+        }
 
-        return assembleRow(left: left, stats: stats, right: formContainer, height: 44)
+        return assembleRow(left: left, stats: stats, right: right, height: 44)
+    }
+    
+    private func makeEmptyRightSpacer() -> UIView {
+        let spacer = UIView()
+        spacer.setWidth(mode: .equal, 0)
+        return spacer
     }
 
     // Собирает строку: [левый блок (гибкий)] [числа (фикс)] [правый блок (фикс)]

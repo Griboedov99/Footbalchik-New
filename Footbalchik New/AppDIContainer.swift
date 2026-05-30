@@ -11,6 +11,7 @@ final class AppDIContainer {
     let matchService: MatchService
     let teamService: TeamService
     let leagueService: LeagueServicing
+    let standingsService: StandingsService
     let favoriteStorage: FavoriteTeamStorage
     
     init() {
@@ -18,6 +19,7 @@ final class AppDIContainer {
         self.matchService = MatchService(network: network)
         self.teamService = TeamService(network: network)
         self.leagueService = LeagueService(network: network)
+        self.standingsService = StandingsService(network: network)
         self.favoriteStorage = CoreDataFavoriteTeamStorage()
     }
 }

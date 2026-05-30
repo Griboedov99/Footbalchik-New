@@ -41,7 +41,6 @@ final class MatchCardCell: UICollectionViewCell {
 
     @objc
     private func handleTap() {
-        print("MatchCardCell tap")
         onTap?()
     }
 }

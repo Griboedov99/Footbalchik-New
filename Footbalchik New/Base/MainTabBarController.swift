@@ -18,17 +18,20 @@ final class MainTabBarController: UITabBarController {
     private let matchService: MatchService
     private let teamService: TeamServicing
     private let leagueService: LeagueServicing
+    private let standingsService: StandingsServicing
     private let favoriteStorage: FavoriteTeamStorage
     
     init(
         matchService: MatchService,
         teamService: TeamServicing,
         leagueService: LeagueServicing,
+        standingsService: StandingsServicing,
         favoriteStorage: FavoriteTeamStorage
     ) {
         self.matchService = matchService
         self.teamService = teamService
         self.leagueService = leagueService
+        self.standingsService = standingsService
         self.favoriteStorage = favoriteStorage
         super.init(nibName: nil, bundle: nil)
     }
@@ -46,6 +49,7 @@ final class MainTabBarController: UITabBarController {
         let homeViewModel = HomeViewModel(
             matchService: matchService,
             leagueService: leagueService,
+            standingsService: standingsService,
             favoriteStorage: favoriteStorage
         )
         let homeVC = HomeViewController(viewModel: homeViewModel)
@@ -53,7 +57,8 @@ final class MainTabBarController: UITabBarController {
         homeNav.setNavigationBarHidden(true, animated: false)
         
         homeVC.onMatchSelected = { [weak homeNav] match in
-            let vc = MatchViewController(match: match, matchService: self.matchService)
+            let vm = MatchViewModel(match: match, matchService: self.matchService)
+            let vc = MatchViewController(viewModel: vm)
             homeNav?.pushViewController(vc, animated: true)
         }
         
@@ -77,12 +82,13 @@ final class MainTabBarController: UITabBarController {
         )
         
         // Favorites tab
-        let favoritesVC = FavoritesViewController(favoriteStorage: favoriteStorage)
+        let favoritesViewModel = FavoritesViewModel(favoriteStorage: favoriteStorage)
+        let favoritesVC = FavoritesViewController(viewModel: favoritesViewModel)
         let favoritesNav = UINavigationController(rootViewController: favoritesVC)
         favoritesNav.tabBarItem = UITabBarItem(
             title: "Favorites",
-            image: UIImage(systemName: "star"),
-            selectedImage: UIImage(systemName: "star.fill")
+            image: UIImage(systemName: "heart"),
+            selectedImage: UIImage(systemName: "heart.fill")
         )
         
         // Profile tab

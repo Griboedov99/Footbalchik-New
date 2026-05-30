@@ -1,12 +1,11 @@
 //
-//  StandingsResponse.swift
+//  ChampionTable.swift
 //  Footbalchik New
 //
 //  Created by Nick on 30.05.2026.
 //
 
 
-//  Standings.swift
 import Foundation
 
 struct StandingsResponse: Decodable {
@@ -57,13 +56,12 @@ enum FormResult {
 }
 
 extension TableRow {
-    // Последние 5 матчей, слева направо от старого к новому
     var recentForm: [FormResult] {
-        let parsed = (form ?? "")
-            .split(separator: ",")
-            .compactMap { $0.trimmingCharacters(in: .whitespaces).first }
-            .compactMap(FormResult.init)
+        guard let form, !form.isEmpty else { return [] }
+        // берём каждый отдельный символ, игнорируя запятые/пробелы
+        let parsed = form
+            .uppercased()
+            .compactMap { FormResult($0) }   // FormResult init вернёт nil для запятых и пробелов
         return Array(parsed.suffix(5))
-        // Если на экране форма окажется в обратном порядке — добавь .reversed()
     }
 }

@@ -2,14 +2,9 @@
 //  FavoritesViewModel.swift
 //  Footbalchik New
 //
-//  Created by Nick on 30.05.2026.
+//  Created by Nick on 02.05.2026.
 //
 
-
-//
-//  FavoritesViewModel.swift
-//  Footbalchik New
-//
 
 import Foundation
 

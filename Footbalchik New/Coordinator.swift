@@ -30,6 +30,7 @@ final class AppCoordinator: Coordinator {
             matchService: container.matchService,
             teamService: container.teamService,
             leagueService: container.leagueService,
+            standingsService: container.standingsService,
             favoriteStorage: container.favoriteStorage
         )
         navigationController.setViewControllers([tabBarController], animated: false)

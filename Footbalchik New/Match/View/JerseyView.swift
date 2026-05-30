@@ -9,159 +9,138 @@
 import UIKit
 
 final class JerseyView: UIView {
-    
-    private let containerView = UIView()
+
+    enum Style {
+        case home, away, goalkeeper
+
+        var base: UIColor {
+            switch self {
+            case .home:       return UIColor(red: 0.86, green: 0.16, blue: 0.21, alpha: 1) // красный
+            case .away:       return UIColor(red: 0.11, green: 0.30, blue: 0.78, alpha: 1) // синий
+            case .goalkeeper: return UIColor(red: 0.10, green: 0.62, blue: 0.36, alpha: 1) // зелёный
+            }
+        }
+    }
+
     private let numberLabel = UILabel()
     private let nameLabel = UILabel()
-    private let jerseyImageView = UIImageView()
-    
-    enum JerseyStyle {
-        case home
-        case away
-        case goalkeeper
-        
-        var backgroundColor: UIColor {
-            switch self {
-            case .home:
-                return UIColor.systemRed
-            case .away:
-                return UIColor.systemBlue
-            case .goalkeeper:
-                return UIColor.systemGreen
-            }
-        }
-        
-        var numberColor: UIColor {
-            return .white
-        }
-        
-        var pattern: String? {
-            switch self {
-            case .home:
-                return "⚽"
-            case .away:
-                return "★"
-            case .goalkeeper:
-                return "🧤"
-            }
-        }
-    }
-    
+    private var style: Style = .home
+
+    // доля высоты под саму футболку, остальное — подпись с фамилией
+    private let jerseyHeightRatio: CGFloat = 0.74
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        backgroundColor = .clear
+        isOpaque = false
+        contentMode = .redraw
+        setupLabels()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setup() {
-        // Контейнер с фоном футболки
-        containerView.layer.cornerRadius = 12
-        containerView.layer.masksToBounds = true
-        
-        // Добавляем паттерн на футболку
-        let patternLabel = UILabel()
-        patternLabel.font = .systemFont(ofSize: 40)
-        patternLabel.textAlignment = .center
-        patternLabel.alpha = 0.15
-        containerView.addSubview(patternLabel)
-        
-        addSubview(containerView)
-        
-        // Номер игрока
-        numberLabel.font = .systemFont(ofSize: 28, weight: .bold)
+    override var intrinsicContentSize: CGSize { CGSize(width: 48, height: 64) }
+
+    required init?(coder: NSCoder) { fatalError() }
+
+    private func setupLabels() {
+        numberLabel.font = .systemFont(ofSize: 22, weight: .heavy)
         numberLabel.textAlignment = .center
         numberLabel.textColor = .white
-        numberLabel.shadowColor = UIColor.black.withAlphaComponent(0.3)
-        numberLabel.shadowOffset = CGSize(width: 1, height: 1)
-        containerView.addSubview(numberLabel)
-        
-        // Имя игрока (опционально)
-        nameLabel.font = .systemFont(ofSize: 11, weight: .medium)
+        numberLabel.adjustsFontSizeToFitWidth = true
+        numberLabel.minimumScaleFactor = 0.5
+        addSubview(numberLabel)
+
+        nameLabel.font = .systemFont(ofSize: 11, weight: .semibold)
         nameLabel.textAlignment = .center
         nameLabel.textColor = .white
-        nameLabel.numberOfLines = 1
-        containerView.addSubview(nameLabel)
-        
-        // Эмблема клуба (маленькая иконка)
-        jerseyImageView.contentMode = .scaleAspectFit
-        jerseyImageView.tintColor = .white.withAlphaComponent(0.3)
-        containerView.addSubview(jerseyImageView)
-        
-        setupConstraints()
-        
-        // Добавляем тень
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = CGSize(width: 0, height: 2)
-        layer.shadowOpacity = 0.3
-        layer.shadowRadius = 4
+        nameLabel.adjustsFontSizeToFitWidth = true
+        nameLabel.minimumScaleFactor = 0.6
+        addSubview(nameLabel)
     }
-    
-    private func setupConstraints() {
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        numberLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        jerseyImageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: topAnchor),
-            containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            
-            numberLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            numberLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: -5),
-            
-            nameLabel.topAnchor.constraint(equalTo: numberLabel.bottomAnchor, constant: 2),
-            nameLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            nameLabel.leadingAnchor.constraint(greaterThanOrEqualTo: containerView.leadingAnchor, constant: 4),
-            nameLabel.trailingAnchor.constraint(lessThanOrEqualTo: containerView.trailingAnchor, constant: -4),
-            
-            jerseyImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 4),
-            jerseyImageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -4),
-            jerseyImageView.widthAnchor.constraint(equalToConstant: 20),
-            jerseyImageView.heightAnchor.constraint(equalToConstant: 20)
-        ])
-    }
-    
-    func configure(number: Int, name: String?, style: JerseyStyle = .home, clubEmblem: UIImage? = nil) {
-        numberLabel.text = "\(number)"
+
+    func configure(number: Int?, name: String?, style: Style) {
+        self.style = style
+        numberLabel.text = number.map(String.init) ?? ""
         nameLabel.text = name
-        containerView.backgroundColor = style.backgroundColor
-        
-        // Добавляем градиент для эффекта ткани
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [
-            style.backgroundColor.withAlphaComponent(0.8).cgColor,
-            style.backgroundColor.withAlphaComponent(1.0).cgColor
-        ]
-        gradientLayer.frame = containerView.bounds
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-        
-        // Удаляем старые градиенты
-        containerView.layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
-        containerView.layer.insertSublayer(gradientLayer, at: 0)
-        
-        if let emblem = clubEmblem {
-            jerseyImageView.image = emblem
-        } else {
-            jerseyImageView.image = UIImage(systemName: "sportscourt.fill")
-        }
-        
-        // Анимация появления
-        transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5) {
-            self.transform = .identity
-        }
+        setNeedsDisplay()
     }
-    
+
+    // MARK: - Layout
+
     override func layoutSubviews() {
         super.layoutSubviews()
-        if let gradientLayer = containerView.layer.sublayers?.first(where: { $0 is CAGradientLayer }) as? CAGradientLayer {
-            gradientLayer.frame = containerView.bounds
+        let jerseyH = bounds.height * jerseyHeightRatio
+        numberLabel.frame = CGRect(x: bounds.width * 0.22, y: jerseyH * 0.38,
+                                   width: bounds.width * 0.56, height: jerseyH * 0.44)
+        nameLabel.frame = CGRect(x: 0, y: jerseyH + 2,
+                                 width: bounds.width, height: bounds.height - jerseyH - 2)
+    }
+
+    // MARK: - Drawing
+
+    override func draw(_ rect: CGRect) {
+        guard let ctx = UIGraphicsGetCurrentContext() else { return }
+
+        let w = rect.width
+        let h = rect.height * jerseyHeightRatio
+        let path = jerseyPath(width: w, height: h)
+
+        // тень под футболкой
+        ctx.saveGState()
+        ctx.setShadow(offset: CGSize(width: 0, height: 2), blur: 6,
+                      color: UIColor.black.withAlphaComponent(0.35).cgColor)
+        style.base.setFill()
+        path.fill()
+        ctx.restoreGState()
+
+        // лёгкий вертикальный градиент для объёма, клипованный по форме
+        ctx.saveGState()
+        path.addClip()
+        let colors = [style.base.lighter(0.12).cgColor,
+                      style.base.cgColor,
+                      style.base.darker(0.10).cgColor] as CFArray
+        if let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(),
+                                     colors: colors, locations: [0, 0.55, 1]) {
+            ctx.drawLinearGradient(gradient, start: .zero,
+                                   end: CGPoint(x: 0, y: h), options: [])
         }
+        ctx.restoreGState()
+
+        // тонкий контур
+        UIColor.black.withAlphaComponent(0.18).setStroke()
+        path.lineWidth = 1
+        path.stroke()
+    }
+
+    private func jerseyPath(width w: CGFloat, height h: CGFloat) -> UIBezierPath {
+        func p(_ fx: CGFloat, _ fy: CGFloat) -> CGPoint { CGPoint(x: w * fx, y: h * fy) }
+        let path = UIBezierPath()
+        path.move(to:    p(0.42, 0.14))                                  // левый край горловины
+        path.addLine(to: p(0.30, 0.05))                                  // левое плечо
+        path.addLine(to: p(0.02, 0.18))                                  // левый рукав, верх
+        path.addLine(to: p(0.12, 0.44))                                  // левый рукав, низ
+        path.addLine(to: p(0.28, 0.32))                                  // левая подмышка
+        path.addLine(to: p(0.30, 0.96))                                  // низ слева
+        path.addLine(to: p(0.70, 0.96))                                  // низ справа
+        path.addLine(to: p(0.72, 0.32))                                  // правая подмышка
+        path.addLine(to: p(0.88, 0.44))                                  // правый рукав, низ
+        path.addLine(to: p(0.98, 0.18))                                  // правый рукав, верх
+        path.addLine(to: p(0.70, 0.05))                                  // правое плечо
+        path.addLine(to: p(0.58, 0.14))                                  // правый край горловины
+        path.addQuadCurve(to: p(0.42, 0.14), controlPoint: p(0.50, 0.26))// вырез горловины
+        path.close()
+        path.lineJoinStyle = .round
+        return path
+    }
+}
+
+private extension UIColor {
+    func lighter(_ a: CGFloat) -> UIColor { adjust(a) }
+    func darker(_ a: CGFloat) -> UIColor { adjust(-a) }
+    private func adjust(_ a: CGFloat) -> UIColor {
+        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, alpha: CGFloat = 0
+        guard getRed(&r, green: &g, blue: &b, alpha: &alpha) else { return self }
+        return UIColor(red:   min(max(r + a, 0), 1),
+                       green: min(max(g + a, 0), 1),
+                       blue:  min(max(b + a, 0), 1), alpha: alpha)
     }
 }

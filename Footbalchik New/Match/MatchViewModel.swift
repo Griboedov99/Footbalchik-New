@@ -36,7 +36,9 @@ final class MatchViewModel {
     var awayTeamName: String { match.awayTeam.displayName }
     var homeLogoURL: String? { match.homeTeam.crest }
     var awayLogoURL: String? { match.awayTeam.crest }
-    var dateText: String { Self.makeDateText(from: match.utcDate) }
+    var dateText: String {
+        "\(Self.makeDateText(from: match.utcDate)) • \(Self.makeTimeText(from: match.utcDate))"
+    }
     var centerText: String { Self.makeCenterText(from: match) }
 
     var initialInfoText: String {
