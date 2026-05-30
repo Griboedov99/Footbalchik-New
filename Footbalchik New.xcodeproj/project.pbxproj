@@ -66,6 +66,13 @@
 		017459E02FC6EBE300B00BD5 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017459DF2FC6EBE300B00BD5 /* SectionHeaderView.swift */; };
 		017459E22FC6ED3900B00BD5 /* APIConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017459E12FC6ED3900B00BD5 /* APIConfig.swift */; };
 		017459E62FC8A32900B00BD5 /* JerseyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017459E52FC8A32900B00BD5 /* JerseyView.swift */; };
+		01745A022FCAA80C00B00BD5 /* MatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01745A012FCAA80C00B00BD5 /* MatchViewModel.swift */; };
+		01745A042FCAAF1600B00BD5 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01745A032FCAAF1600B00BD5 /* FavoritesViewModel.swift */; };
+		01745A062FCABAC400B00BD5 /* ChampionTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01745A052FCABAC400B00BD5 /* ChampionTable.swift */; };
+		01745A082FCABBF700B00BD5 /* StandingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01745A072FCABBF700B00BD5 /* StandingsService.swift */; };
+		01745A0B2FCABD9F00B00BD5 /* FormDotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01745A0A2FCABD9F00B00BD5 /* FormDotView.swift */; };
+		01745A0D2FCABDB400B00BD5 /* StandingsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01745A0C2FCABDB400B00BD5 /* StandingsCardView.swift */; };
+		01745A0F2FCAC57600B00BD5 /* StandingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01745A0E2FCAC57600B00BD5 /* StandingsCell.swift */; };
 		019A8FC62FAB14EE00FE8B92 /* TeamServicing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019A8FC52FAB14EE00FE8B92 /* TeamServicing.swift */; };
 		019A8FC82FAB150300FE8B92 /* TeamService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019A8FC72FAB150300FE8B92 /* TeamService.swift */; };
 		019A8FCA2FAB161100FE8B92 /* TeamsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019A8FC92FAB161100FE8B92 /* TeamsResponse.swift */; };
@@ -134,6 +141,13 @@
 		017459DF2FC6EBE300B00BD5 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		017459E12FC6ED3900B00BD5 /* APIConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConfig.swift; sourceTree = "<group>"; };
 		017459E52FC8A32900B00BD5 /* JerseyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JerseyView.swift; sourceTree = "<group>"; };
+		01745A012FCAA80C00B00BD5 /* MatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchViewModel.swift; sourceTree = "<group>"; };
+		01745A032FCAAF1600B00BD5 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
+		01745A052FCABAC400B00BD5 /* ChampionTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChampionTable.swift; sourceTree = "<group>"; };
+		01745A072FCABBF700B00BD5 /* StandingsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingsService.swift; sourceTree = "<group>"; };
+		01745A0A2FCABD9F00B00BD5 /* FormDotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDotView.swift; sourceTree = "<group>"; };
+		01745A0C2FCABDB400B00BD5 /* StandingsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingsCardView.swift; sourceTree = "<group>"; };
+		01745A0E2FCAC57600B00BD5 /* StandingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingsCell.swift; sourceTree = "<group>"; };
 		019A8FC52FAB14EE00FE8B92 /* TeamServicing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamServicing.swift; sourceTree = "<group>"; };
 		019A8FC72FAB150300FE8B92 /* TeamService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamService.swift; sourceTree = "<group>"; };
 		019A8FC92FAB161100FE8B92 /* TeamsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsResponse.swift; sourceTree = "<group>"; };
@@ -193,7 +207,6 @@
 				017459DB2FC6E8E300B00BD5 /* LeagueServicing.swift */,
 				019A8FC52FAB14EE00FE8B92 /* TeamServicing.swift */,
 				0165EF092F7423AC00B55B1B /* NetworkError.swift */,
-				0165EF0A2F7423AC00B55B1B /* NetworkService.swift */,
 				0165EF0B2F7423AC00B55B1B /* NetworkServicing.swift */,
 			);
 			path = "Network Servicing";
@@ -243,7 +256,6 @@
 		0165EF1C2F7423AC00B55B1B /* Sections */ = {
 			isa = PBXGroup;
 			children = (
-				017459DD2FC6E95200B00BD5 /* LeagueSelector.swift */,
 				0165EF1B2F7423AC00B55B1B /* HomeSection.swift */,
 			);
 			path = Sections;
@@ -261,8 +273,10 @@
 		0165EF252F7423AC00B55B1B /* View */ = {
 			isa = PBXGroup;
 			children = (
-				0165EF222F7423AC00B55B1B /* Match Card */,
+				017459DD2FC6E95200B00BD5 /* LeagueSelector.swift */,
 				017459DF2FC6EBE300B00BD5 /* SectionHeaderView.swift */,
+				01745A092FCABD9100B00BD5 /* Standings */,
+				0165EF222F7423AC00B55B1B /* Match Card */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -296,6 +310,7 @@
 			children = (
 				0165EF2C2F7423AC00B55B1B /* View */,
 				0165EF2D2F7423AC00B55B1B /* MatchViewController.swift */,
+				01745A012FCAA80C00B00BD5 /* MatchViewModel.swift */,
 			);
 			path = Match;
 			sourceTree = "<group>";
@@ -308,6 +323,7 @@
 				0165EF312F7423AC00B55B1B /* Match.swift */,
 				0165EF322F7423AC00B55B1B /* Player.swift */,
 				0165EF332F7423AC00B55B1B /* Team.swift */,
+				01745A052FCABAC400B00BD5 /* ChampionTable.swift */,
 				0165EF342F7423AC00B55B1B /* TeamStatistics.swift */,
 				0165EF352F7423AC00B55B1B /* ThemeManager.swift */,
 			);
@@ -319,16 +335,16 @@
 			children = (
 				0165EF152F7423AC00B55B1B /* AppDIContainer.swift */,
 				0165EF162F7423AC00B55B1B /* Core */,
+				0165EF362F7423AC00B55B1B /* Models */,
 				017459B82FBAC3F100B00BD5 /* Storage */,
 				0165EF032F7423AC00B55B1B /* Base */,
 				0165EF082F7423AC00B55B1B /* Components */,
 				0165EF272F7423AC00B55B1B /* Home */,
 				0165EF2E2F7423AC00B55B1B /* Match */,
-				0165EF362F7423AC00B55B1B /* Models */,
-				017459B32FBAC2EA00B00BD5 /* Favorites */,
 				017459FF2FCA97C400B00BD5 /* Search */,
-				0165EF392F7423AC00B55B1B /* Coordinator.swift */,
+				017459B32FBAC2EA00B00BD5 /* Favorites */,
 				0165EF3A2F7423AC00B55B1B /* Info.plist */,
+				0165EF392F7423AC00B55B1B /* Coordinator.swift */,
 				0165EF382F7423AC00B55B1B /* Assets.xcassets */,
 				0165EF3B2F7423AC00B55B1B /* SceneDelegate.swift */,
 				0165EF372F7423AC00B55B1B /* AppDelegate.swift */,
@@ -350,6 +366,7 @@
 		017459B32FBAC2EA00B00BD5 /* Favorites */ = {
 			isa = PBXGroup;
 			children = (
+				01745A032FCAAF1600B00BD5 /* FavoritesViewModel.swift */,
 				017459D92FC45F0B00B00BD5 /* FavoritesViewController.swift */,
 			);
 			path = Favorites;
@@ -400,10 +417,22 @@
 		01745A002FCA9D5E00B00BD5 /* NetworkService */ = {
 			isa = PBXGroup;
 			children = (
+				0165EF0A2F7423AC00B55B1B /* NetworkService.swift */,
+				01745A072FCABBF700B00BD5 /* StandingsService.swift */,
 				019A8FC72FAB150300FE8B92 /* TeamService.swift */,
 				0165EF0F2F7423AC00B55B1B /* MatchService.swift */,
 			);
 			path = NetworkService;
+			sourceTree = "<group>";
+		};
+		01745A092FCABD9100B00BD5 /* Standings */ = {
+			isa = PBXGroup;
+			children = (
+				01745A0E2FCAC57600B00BD5 /* StandingsCell.swift */,
+				01745A0C2FCABDB400B00BD5 /* StandingsCardView.swift */,
+				01745A0A2FCABD9F00B00BD5 /* FormDotView.swift */,
+			);
+			path = Standings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -481,6 +510,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01745A0D2FCABDB400B00BD5 /* StandingsCardView.swift in Sources */,
 				017459B52FBAC32900B00BD5 /* FavoriteTeamStorage.swift in Sources */,
 				0165EF3F2F7423AC00B55B1B /* BaseViewController.swift in Sources */,
 				0165EF402F7423AC00B55B1B /* GlassCardView.swift in Sources */,
@@ -489,6 +519,7 @@
 				017459CE2FC41B3900B00BD5 /* CoreDataFavoriteTeamStorage.swift in Sources */,
 				0165EF422F7423AC00B55B1B /* MatchCardCell.swift in Sources */,
 				0165EF432F7423AC00B55B1B /* MatchSearchBarView.swift in Sources */,
+				01745A082FCABBF700B00BD5 /* StandingsService.swift in Sources */,
 				017459BA2FBAC41400B00BD5 /* SearchTeamsViewModel.swift in Sources */,
 				0165EF442F7423AC00B55B1B /* NetworkError.swift in Sources */,
 				0165EF452F7423AC00B55B1B /* NetworkService.swift in Sources */,
@@ -497,6 +528,7 @@
 				0165EF462F7423AC00B55B1B /* NetworkServicing.swift in Sources */,
 				0165EF472F7423AC00B55B1B /* APIRouter.swift in Sources */,
 				0165EF482F7423AC00B55B1B /* MatchesResponse.swift in Sources */,
+				01745A042FCAAF1600B00BD5 /* FavoritesViewModel.swift in Sources */,
 				0165EF492F7423AC00B55B1B /* MatchService.swift in Sources */,
 				0165EF4A2F7423AC00B55B1B /* ImageLoader.swift in Sources */,
 				0165EF4B2F7423AC00B55B1B /* UIImageView+Load.swift in Sources */,
@@ -512,11 +544,13 @@
 				017459DA2FC45F0C00B00BD5 /* FavoritesViewController.swift in Sources */,
 				017459D42FC41E8700B00BD5 /* FavoriteTeam.swift in Sources */,
 				0165EF542F7423AC00B55B1B /* MatchCardView.swift in Sources */,
+				01745A062FCABAC400B00BD5 /* ChampionTable.swift in Sources */,
 				0165EF552F7423AC00B55B1B /* MatchCardViewModel.swift in Sources */,
 				017459D62FC41EA600B00BD5 /* FavoriteTeam+CoreDataProperties.swift in Sources */,
 				0165EF582F7423AC00B55B1B /* HomeViewModel.swift in Sources */,
 				0165EF592F7423AC00B55B1B /* FieldCanvasView.swift in Sources */,
 				0165EF5A2F7423AC00B55B1B /* FootballPitchView.swift in Sources */,
+				01745A0F2FCAC57600B00BD5 /* StandingsCell.swift in Sources */,
 				0165EF5B2F7423AC00B55B1B /* MatchHeaderCardView.swift in Sources */,
 				017459E22FC6ED3900B00BD5 /* APIConfig.swift in Sources */,
 				0165EF5C2F7423AC00B55B1B /* PlayerAvatarView.swift in Sources */,
@@ -531,6 +565,8 @@
 				0165EF612F7423AC00B55B1B /* Player.swift in Sources */,
 				017459C12FBC9E6900B00BD5 /* SearchTeamsCollectionManager.swift in Sources */,
 				017459D02FC41D8E00B00BD5 /* CoreDataDebugHelper.swift in Sources */,
+				01745A022FCAA80C00B00BD5 /* MatchViewModel.swift in Sources */,
+				01745A0B2FCABD9F00B00BD5 /* FormDotView.swift in Sources */,
 				0165EF622F7423AC00B55B1B /* Team.swift in Sources */,
 				0165EF632F7423AC00B55B1B /* TeamStatistics.swift in Sources */,
 				017459E62FC8A32900B00BD5 /* JerseyView.swift in Sources */,
